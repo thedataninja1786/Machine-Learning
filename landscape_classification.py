@@ -25,7 +25,7 @@ from google.colab import drive
 drive.mount('/content/drive')
 print(os.getcwd())
 
-"""###Creating the directories"""
+"""Creating the directories for each category"""
 
 folder = 'classification_data'
 samples = ['train','test']
@@ -44,7 +44,7 @@ for sample in samples:
         os.mkdir(category)
     os.chdir(main_path)
 
-"""###Downloading the images"""
+"""Downloading the images"""
 
 # The User-Agent request header contains a characteristic string that allows the network protocol peers to identify the application type, 
 # operating system, and software version of the requesting software user agent needed for google search
@@ -103,7 +103,7 @@ def download_images():
 
 download_images()
 
-"""###Allocate the images between train and test directories"""
+"""Allocate the images between train and test directories"""
 
 #Create the test directories
 train_directories = []
@@ -124,7 +124,7 @@ for i,train_directory in enumerate(train_directories):
   for file in random.sample(files,no_of_files):
     shutil.move(os.path.join(train_directory,file),test_directories[i])
 
-"""#Import the necessary modules for training a classification algorithm """
+"""Necessary modules for training a classification algorithm """
 
 import numpy as np 
 import tensorflow as tf
@@ -172,7 +172,7 @@ def plotImages(images_arr):
 plotImages(imgs)
 print(labels)
 
-"""##Training the model"""
+"""Training the model"""
 
 model = Sequential([
                     keras.layers.AveragePooling2D(pool_size=(6,6),input_shape=(224,224,3)),
@@ -197,7 +197,8 @@ predictions = model.predict(x = test_batches, verbose = 1)
 
 cm = confusion_matrix(y_true=test_batches.classes, y_pred=np.argmax(predictions, axis = -1))
 
-#This function prints and plots the confusion matrix. Normalization can be applied by setting normalize=True
+#This function is available from the TF documenation for plotting a confusion matrix of the results. 
+#Normalization can be applied by setting normalize=True 
 
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
@@ -229,7 +230,6 @@ def plot_confusion_matrix(cm, classes,
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
 
-#Plot a confusion matrix of the test results
-
+#Plot a confusion matrix of the classified results
 cm_plot_labels = test_batches.class_indices.keys()
 plot_confusion_matrix(cm = cm, classes=cm_plot_labels, title = 'Confusion Matrix')
