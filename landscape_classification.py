@@ -1,6 +1,3 @@
-'''SIMPLE TEXT CLASSIFIER USING LSTM NEURAL NETWORKS
-   AND MINING OF NEW DATA AS THE TEST DATA SET'''
-
 # -*- coding: utf-8 -*-
 """Landscape_Classification.ipynb
 
